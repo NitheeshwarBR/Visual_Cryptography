@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="sample_form" method="post" action="/execute">
+        <label for="a">Enter a : </label>
+        <input type="text" id="a" name="a" required/>
+        <br/><br/>
+        <label for="b">Enter b : </label>
+        <input type="text" id="b" name="b" required/>
+        <br/><br/>
+        <button type="button" onclick="ExecuteCppModule()">Submit</button>
+    </form>
+    <div id="output"></div>
+    <script>
+        function ExecuteCppModule(){
+            const form_details = document.getElementById('sample_form');
+            const form_data = new FormData(form_details);
+            fetch('/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(form_data)),
+            }).then(response => response.text())
+                .then(output => {
+                    document.getElementById('output').innerText = output;
+                })
+                .catch(error => {
+                    console.error("Error : ", error)
+                    document.getElementById('output').innerText = 'Error while executing the cpp module';
+                })
+        }
+        
+    </script>
+</body>
+</html>
