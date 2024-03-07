@@ -1,5 +1,5 @@
 const express = require('express');
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 const app = express();
 const port = 3000;
 
@@ -12,28 +12,21 @@ app.get('/', (req, res) => {
 
 app.post('/execute', (req, res) => {
     const { a, b } = req.body;
-    executeCommand(command)
-        .then(({ stdout, stderr }) => {
-            console.log(`C++ program output: ${stdout}`);
-            res.send(stdout);
-        })
-        .catch(error => {
-            console.error(`Error executing the C++ program: ${error.message}`);
-            res.status(500).send('Internal Server Error');
-        });
-});
 
-function executeCommand(command) {
-    return new Promise((resolve, reject) => {
-        exec(command, (error, stdout, stderr) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve({ stdout, stderr });
-            }
-        });
+    // Input validation
+    if (!Number.isInteger(Number(a)) || !Number.isInteger(Number(b))) {
+        return res.status(400).send('Inputs must be integers');
+    }
+
+    execFile('./addProgram', [a, b], (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing the C++ program: ${error.message}`);
+            return res.status(500).send('Internal Server Error');
+        }
+        console.log(`C++ program output: ${stdout}`);
+        res.send(stdout);
     });
-}
+});
 
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);

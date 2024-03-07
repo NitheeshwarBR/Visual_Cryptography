@@ -32,7 +32,7 @@ void generateShares(const Mat &inputImage, Mat &share1, Mat &share2,
 Mat decrypt_shares(const Mat &share1, const Mat &share2, const Mat &share3) {
   int rows = share1.rows;
   int cols = share1.cols;
-  Mat secret = Mat::zeros(rows, cols, CV_8UC2);
+  Mat secret = Mat::zeros(rows, cols, CV_8UC1);
 
   for (int i = 0; i < rows; ++i) {
     for (int j = 0; j < cols; ++j) {
@@ -56,9 +56,9 @@ int main(int argc, char* argv[])
 {
     Mat Input_image = cv::imread("Nitheeshwar.jpeg");
   
-    Mat share1 = Mat::zeros(Input_image.size(),CV_8UC2);
-    Mat share2 = Mat::zeros(Input_image.size(), CV_8UC2);
-    Mat share3 = Mat::zeros(Input_image.size(), CV_8UC2);
+    Mat share1 = Mat::zeros(Input_image.size(),CV_8UC1);
+    Mat share2 = Mat::zeros(Input_image.size(), CV_8UC1);
+    Mat share3 = Mat::zeros(Input_image.size(), CV_8UC1);
     
     generateShares(Input_image, share1, share2,share3);
 
@@ -68,7 +68,6 @@ int main(int argc, char* argv[])
     imshow(Title1,Input_image);
     waitKey(0);
     destroyWindow(Title1);
-
 
     string Title2 = "Share 1";
     namedWindow(Title2);
@@ -106,5 +105,7 @@ int main(int argc, char* argv[])
     Mat secret = decrypt_shares(share1_read, share2_read,share3_read);
     imshow("Decrypted Image", secret);
     waitKey(0);
+
+    imwrite("Decrypted_image.png",secret);
     return 0;
 }
