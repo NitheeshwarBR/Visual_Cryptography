@@ -54,7 +54,7 @@ Mat decrypt_shares(const Mat &share1, const Mat &share2, const Mat &share3) {
 
 int main(int argc, char* argv[])
 {
-    Mat Input_image = cv::imread("Nitheeshwar.jpeg");
+    Mat Input_image = cv::imread("image.jpg");
   
     Mat share1 = Mat::zeros(Input_image.size(),CV_8UC1);
     Mat share2 = Mat::zeros(Input_image.size(), CV_8UC1);
