@@ -1,8 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import HorizontalStepper from './components/HorizontalStepper';
-import UploadImagePage from './pages/UploadImagePage';
+import UploadImagePage from './pages/UploadImagePage/UploadImagePage';
 
 function App() {
   return (

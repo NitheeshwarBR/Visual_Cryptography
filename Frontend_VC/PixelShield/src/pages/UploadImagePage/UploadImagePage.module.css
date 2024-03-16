@@ -1,0 +1,7 @@
+.uploadPage{
+    height: calc(100vh - 0px);
+    width: calc(100% - 0px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
